@@ -19,12 +19,6 @@ pipeline {
             }
         }
 		
-        stage('terraform copy tfvars') {
-            steps {
-                sh 'cp /var/lib/jenkins/secrets/terraform.tfvars /var/lib/jenkins/workspace/ec2/labs'
-            }
-        }
-
         stage('terraform init') {
             steps {
                 sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
