@@ -39,7 +39,7 @@ pipeline {
 
         stage('terraform apply') {
             steps {
-                sh 'terraform apply -input=true /var/lib/jenkins/workspace/ec2/labs'
+                sh 'terraform apply -auto-approve /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
