@@ -27,7 +27,7 @@ pipeline {
 
         stage('terraform init') {
             steps {
-                sh '/root/terraform init /var/lib/jenkins/workspace/ec2/labs'
+                sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
