@@ -15,31 +15,31 @@ pipeline {
 
 		stage('git clone') {
             steps {
-                sh 'cd /var/lib/jenkins/workspace/ec2;rm -r *;git clone https://github.com/santhoshbraws/labs.git'
+                sh 'cd /var/lib/jenkins/workspace/ec2;rm -r *;sudo git clone https://github.com/santhoshbraws/labs.git'
             }
         }
 		
         stage('terraform copy tfvars') {
             steps {
-                sh 'cp /var/lib/jenkins/secrets/terraform.tfvars /var/lib/jenkins/workspace/ec2'
+                sh 'cp /var/lib/jenkins/secrets/terraform.tfvars /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform init') {
             steps {
-                sh 'terraform init /var/lib/jenkins/workspace/ec2'
+                sh '/root/terraform init /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform plan') {
             steps {
-                sh 'terraform plan /var/lib/jenkins/workspace/ec2'
+                sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform apply') {
             steps {
-                sh 'terraform apply /var/lib/jenkins/workspace/ec2'
+                sh 'terraform apply /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
