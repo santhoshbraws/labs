@@ -21,25 +21,25 @@ pipeline {
 		
         stage('terraform copy tfvars') {
             steps {
-                sh 'cp /root/terraform.tfvars /var/lib/jenkins/workspace/ec2'
+                sh 'cp /root/terraform.tfvars /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform init') {
             steps {
-                sh '/root/terraform init /var/lib/jenkins/workspace/ec2'
+                sh '/root/terraform init /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform plan') {
             steps {
-                sh '/root/terraform plan /var/lib/jenkins/workspace/ec2'
+                sh '/root/terraform plan /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform apply') {
             steps {
-                sh '/root/terraform apply /var/lib/jenkins/workspace/ec2'
+                sh '/root/terraform apply /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
