@@ -3,6 +3,7 @@ provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
   region = "us-east-2"
+  shared_credentials_file = "/var/lib/jenkins/secrets/cred"
 }
 
 resource "aws_instance" "web_server" {
