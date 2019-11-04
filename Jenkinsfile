@@ -7,38 +7,39 @@ pipeline {
 
     stages {
 
-        stage('terraform started') {
+      	stage('terraform started') {
             steps {
                 sh 'echo "Started...!" '
             }
         }
 
-	 stage('terraform copy tfvars') {
+		stage('git clone') {
             steps {
-                sh 'cp /root/terraform.tfvars /root/lab/labs'
+                sh 'sudo rm -r *;sudo git clone https://github.com/santhoshbraws/labs.git'
+            }
+        }
+		
+        stage('terraform copy tfvars') {
+            steps {
+                sh 'sudo cp /root/terraform.tfvars /var/lib/jenkins/workspace/ec2'
             }
         }
 
-
-        stage('git clone') {
-            steps {
-                sh 'rm -r *;git clone https://github.com/santhoshbraws/labs.git'
-            }
-        }
         stage('terraform init') {
             steps {
-                sh '/root/terraform init /root/lab/labs'
-            }
-        }
-        stage('terraform plan') {
-            steps {
-                sh 'ls /root/lab/labs;/root/terraform plan /root/lab/labs'
+                sh 'sudo /root/terraform init /var/lib/jenkins/workspace/ec2'
             }
         }
 
-	 stage('terraform apply') {
+        stage('terraform plan') {
             steps {
-                sh 'ls /root/lab/labs;/root/terraform apply /root/lab/labs'
+                sh 'sudo /root/terraform plan /var/lib/jenkins/workspace/ec2'
+            }
+        }
+
+        stage('terraform apply') {
+            steps {
+                sh 'sudo /root/terraform apply /var/lib/jenkins/workspace/ec2'
             }
         }
 
@@ -47,7 +48,7 @@ pipeline {
                 sh 'echo "Ended....!!"'
             }
         }
-
-        
     }
 }
+
+
