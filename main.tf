@@ -1,9 +1,9 @@
 provider "aws" {
 # Credentials to access aws cluster
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
+#  access_key = "${var.access_key}"
+#  secret_key = "${var.secret_key}"
   region = "us-east-2"
-  shared_credentials_file = "/var/lib/jenkins/secrets/cred"
+  shared_credentials_file = "/var/lib/jenkins/secrets/creds"
 }
 
 resource "aws_instance" "web_server" {
