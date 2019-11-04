@@ -36,7 +36,7 @@ pipeline {
             }
         }
 
-	 stage('terraform plan') {
+	 stage('terraform apply') {
             steps {
                 sh 'ls /root/lab/labs;/root/terraform apply /root/lab/labs'
             }
