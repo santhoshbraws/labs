@@ -8,7 +8,7 @@ provider "aws" {
 
 resource "aws_instance" "web_server" {
   instance_type = "${var.instance_type}"
-  ami           = "${var.ami}"
+  ami           = "ami-01a834fd83ae239ff"
   count         = 1
   subnet_id     = "${var.subnet_id}"
   associate_public_ip_address = "true"
