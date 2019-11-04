@@ -11,5 +11,5 @@ resource "aws_instance" "web_server" {
   ami           = "${var.ami}"
   count         = 1
   subnet_id     = "${var.subnet_id}"
-  associate_public_ip_address = "${var.associate_public_ip_address}"
+  associate_public_ip_address = "true"
 }
