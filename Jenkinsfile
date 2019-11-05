@@ -1,11 +1,5 @@
 pipeline {
     
-	environment {
-			AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-			AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        
-        }
-		
     agent {
         node {
             label 'master'
@@ -29,16 +23,12 @@ pipeline {
 
         stage('terraform init') {
             steps {
-            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
-				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
 				sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
         	}
         }
 
         stage('terraform plan') {
             steps {
-            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
-				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
            		sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
 			}
         }
@@ -46,8 +36,6 @@ pipeline {
 
         stage('terraform apply') {
             steps {
-            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
-				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
 				sh 'terraform apply -auto-approve /var/lib/jenkins/workspace/ec2/labs'
 			}
         }
