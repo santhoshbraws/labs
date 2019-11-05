@@ -2,6 +2,8 @@ pipeline {
     agent {
         node {
             label 'master'
+			withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+            }
         }
     }
 
@@ -22,25 +24,19 @@ pipeline {
 
         stage('terraform init') {
             steps {
-				withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_ACCESS_KEY_ID_PASS', usernameVariable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_ACCESS_KEY_PASS', usernameVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-    			sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
-				}
+				sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
             }
         }
 
         stage('terraform plan') {
             steps {
-			    withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_ACCESS_KEY_ID_PASS', usernameVariable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_ACCESS_KEY_PASS', usernameVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
+				sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
 				}
-            }
         }
 
         stage('terraform apply') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_ACCESS_KEY_ID_PASS', usernameVariable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_ACCESS_KEY_PASS', usernameVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 				sh 'terraform apply /var/lib/jenkins/workspace/ec2/labs'
-				}
             }
         }
 
