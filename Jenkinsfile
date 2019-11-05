@@ -3,13 +3,18 @@ pipeline {
         node {
             label 'master'
         }
+	environment {
+		AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        
+        }
     }
 
 	stages {
 
 	   	stage('terraform started') {
             steps {
-					sh 'echo "Started...!" '
+		sh 'echo "Started...!" '
             }
         }
 
@@ -19,29 +24,28 @@ pipeline {
             }
         }		
 
-
         stage('terraform init') {
             steps {
-					withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            		sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
-                }
-			}
+            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
+				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
+				sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
+        	}
         }
 
         stage('terraform plan') {
             steps {
-					withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            		sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
-				}
+            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
+				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
+           		sh 'terraform plan /var/lib/jenkins/workspace/ec2/labs'
 			}
         }
 		
 
         stage('terraform apply') {
             steps {
-					withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-					sh 'terraform apply -auto-approve /var/lib/jenkins/workspace/ec2/labs'
-                }
+            	sh 'export ${env.AWS_ACCESS_KEY_ID}'
+				sh 'export ${env.AWS_SECRET_ACCESS_KEY}'
+				sh 'terraform apply -auto-approve /var/lib/jenkins/workspace/ec2/labs'
 			}
         }
 
