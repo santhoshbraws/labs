@@ -22,8 +22,8 @@ pipeline {
 
         stage('terraform init') {
             steps {
-			withCredentials([string(credentialsId: '', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: '', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-				sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
+			withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_ACCESS_KEY_ID_PASS', usernameVariable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_ACCESS_KEY_PASS', usernameVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+    			sh 'terraform init /var/lib/jenkins/workspace/ec2/labs'
 				}
             }
         }
