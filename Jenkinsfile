@@ -5,7 +5,6 @@ pipeline {
         }
     }
 
-	withCredentials([string(credentialsId: '', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: '', variable: 'AWS_SECRET_ACCESS_KEY')]) {
 
     stages {
 
@@ -48,4 +47,3 @@ pipeline {
     }
 }
 
-}
