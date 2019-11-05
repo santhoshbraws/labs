@@ -1,20 +1,23 @@
 pipeline {
+    
+	environment {
+			AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+			AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        
+        }
+		
     agent {
         node {
             label 'master'
         }
-	environment {
-		AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        
-        }
+		
     }
 
 	stages {
 
 	   	stage('terraform started') {
             steps {
-		sh 'echo "Started...!" '
+					sh 'echo "Started...!" '
             }
         }
 
